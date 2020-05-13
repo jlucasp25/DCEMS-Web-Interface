@@ -12,7 +12,7 @@ class Server extends Device implements WebPrintable {
   ///Constructors
   Server(String id, String name, String ip) : super(id,name,ip);
   Server.withStatus(String id, String name, String ip, bool active) : super.withStatus(id,name,ip, active);
-
+  
   ///printToHTML()
   ///Returns a DOM Element of the device's information.
   @override

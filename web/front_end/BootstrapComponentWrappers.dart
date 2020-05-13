@@ -9,8 +9,8 @@ class BootstrapComponentWrappers {
   ///@param List<Element> with only 3 of length
   ///@throws Exception if list doesnt have 3 elements.
   static Element buildCentered3ElementsRow(List<Element> elements) {
-    if (elements.length != 3) {
-      throw Exception('Element list for row doesnt have 3 elements!');
+    if (elements.length > 3) {
+      throw Exception('Element list for row has more than 3 elements!');
     }
     Element row = Element.div()..classes.addAll(['row','justify-content-center','align-items-center']);
     for (Element el in elements) {

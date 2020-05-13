@@ -3,14 +3,18 @@ import 'dart:html';
 import 'front_end/PanelNavBar.dart';
 import 'front_end/SearchPanel.dart';
 import 'front_end/BootstrapComponentWrappers.dart';
+import 'front_end/Footer.dart';
 import 'devices/Server.dart';
 import 'devices/UPS.dart';
-
+import 'devices/Device.dart';
+import 'dummy_devices.dart';
 void main() {
   //Outputs content to the dart container.
   Element out = querySelector('#dart_output');
   //Displays the device test page on the container.
+  out.children.add(PanelNavBar.getPanelNavBar());
   displayDevicePage(out);
+  out.children.add(Footer.getFooter());
 }
 
 ///displayDevicePage()
@@ -21,18 +25,36 @@ void displayDevicePage(Element out) {
   out.children.add(Element.br());
 
   //Container contents
-  container.children.add(PanelNavBar.getPanelNavBar());
   container.children.add(SearchPanel.buildSearchPanel());
-  container.children.add(BootstrapComponentWrappers.buildCentered3ElementsRow([
-    Server.withStatus('1','server-1','192.168.0.1',true).printToHTML(),
-    Server.withStatus('2','server-2','192.168.0.2',true).printToHTML(),
-    Server.withStatus('3','server-3','192.168.0.3',false).printToHTML(),
-    ]));
-  container.children.add(BootstrapComponentWrappers.buildCentered3ElementsRow([
-    UPS.withStatus('4','ups-1','192.168.0.4',90,true).printToHTML(),
-    UPS.withStatus('5','ups-2','192.168.0.5',90,true).printToHTML(),
-    UPS.withStatus('6','ups-3','192.168.0.6',90,false).printToHTML(),
-    ]));
+  
+  //Generate dummy devices
+  List<String> devicesJSONs = generateDummyJSONS();
+  List<dynamic> devices = []; //Dynamic allows for a list of Servers and UPS
+  for (String device in devicesJSONs) {
+    var dev = Device.fromJSON(device);
+    devices.add(dev);
+  }
+  /*  int i = 1;
+  
+  for (Device device in devices) {
+    i++;
+  }*/
+  List<Element> row = [];
+  int i = 0;
+  //Generates DOM elements and adds them to rows. (not very good code here!)
+  for (var dev in devices) {
+    row.add(dev.printToHTML());
+    i++;
+    if (i == 3) {
+      container.children.add(BootstrapComponentWrappers.buildCentered3ElementsRow(row));
+      row = [];
+      i = 0;
+    }
+  }
+  if (row.length != 0) {
+    container.children.add(BootstrapComponentWrappers.buildCentered3ElementsRow(row));
+  }
+
   //Append container to the dart output
   out.children.add(container);
 }

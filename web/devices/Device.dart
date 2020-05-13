@@ -30,7 +30,7 @@ class Device {
 
   ///fromJSON()
   ///Factory constructor that parses a JSON to build a Device instance.
-  static Device fromJSON(String jsonObject) {
+  factory Device.fromJSON(String jsonObject) {
     Map<String,dynamic> jsonContents = jsonDecode(jsonObject);
     
     if (!jsonContents.containsKey('device_type') || !jsonContents.containsKey('device_id') || !jsonContents.containsKey('device_name') || !jsonContents.containsKey('device_ip') || !jsonContents.containsKey('device_status') ) {
@@ -78,15 +78,3 @@ class Device {
   }
 
 }
-
-/* Example of json */
-/*
-  {
-    'device_id': 1,
-    'device_type': 'server',
-    'device_ip': '100.100.100.100',
-    'device_status': 'active',
-    'device_charge': 80
-
-  }
-*/
