@@ -4,6 +4,7 @@ import 'front_end/PanelNavBar.dart';
 import 'front_end/SearchPanel.dart';
 import 'front_end/BootstrapComponentWrappers.dart';
 import 'front_end/Footer.dart';
+import 'front_end/LoginPanel.dart';
 import 'devices/Server.dart';
 import 'devices/UPS.dart';
 import 'devices/Device.dart';
@@ -13,8 +14,20 @@ void main() {
   Element out = querySelector('#dart_output');
   //Displays the device test page on the container.
   out.children.add(PanelNavBar.getPanelNavBar());
-  displayDevicePage(out);
+  displayEntryPage(out);
+  
+  //displayDevicePage(out);
   out.children.add(Footer.getFooter());
+}
+
+
+void displayEntryPage(Element out) {
+  Element container = Element.div();
+  container.classes.add('container-fluid');
+  out.children.add(Element.br());
+  LoginPanel panel = LoginPanel();
+  container.children.add(panel.getLoginPanel());
+  out.children.add(container);
 }
 
 ///displayDevicePage()
@@ -29,7 +42,7 @@ void displayDevicePage(Element out) {
   
   //Generate dummy devices
   List<String> devicesJSONs = generateDummyJSONS();
-  List<dynamic> devices = []; //Dynamic allows for a list of Servers and UPS
+  List<dynamic> devices = []; //Dynamic allows for a mixed list of Servers and UPS
   for (String device in devicesJSONs) {
     var dev = Device.fromJSON(device);
     devices.add(dev);
