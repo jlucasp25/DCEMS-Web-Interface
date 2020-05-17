@@ -3,6 +3,7 @@ import 'dart:convert';
 void main() {
   var x = generateDummyJSONS();
 }
+
 List<String> generateDummyJSONS() {
   List<String> jsons = [];
   for (int i = 0 ; i < 5 ; i++) {

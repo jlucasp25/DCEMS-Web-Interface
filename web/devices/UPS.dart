@@ -33,7 +33,9 @@ class UPS extends Device implements WebPrintable {
     cardBody.children.add(stateText);
     //Card Footer
     Element cardFooter = Element.div()..classes.addAll(['card-footer','text-align-center']);
-    cardFooter.innerHtml = ipAddress.toString();
+    Element powerButton = ButtonElement()..classes.addAll(['btn','btn-dark','mr-2'])..innerText = 'Energia';
+    cardFooter.children.add(powerButton);
+    cardFooter.innerHtml += ipAddress.toString();
     //Nests elements
     card.children.addAll([cardHeader,cardBody,cardFooter]);
     return card;

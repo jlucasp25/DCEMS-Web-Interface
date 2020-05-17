@@ -30,8 +30,8 @@ class Device {
 
   ///fromJSON()
   ///Factory constructor that parses a JSON to build a Device instance.
-  factory Device.fromJSON(String jsonObject) {
-    Map<String,dynamic> jsonContents = jsonDecode(jsonObject);
+  factory Device.fromJSON(Map<String,dynamic> jsonObject) {
+    Map<String,dynamic> jsonContents = jsonObject;
     
     if (!jsonContents.containsKey('device_type') || !jsonContents.containsKey('device_id') || !jsonContents.containsKey('device_name') || !jsonContents.containsKey('device_ip') || !jsonContents.containsKey('device_status') ) {
       throw Exception('JSON received doesnt contain all required keys!');
