@@ -1,14 +1,8 @@
 import 'dart:html';
 
 import 'front_end/PanelNavBar.dart';
-import 'front_end/SearchPanel.dart';
-import 'front_end/BootstrapComponentWrappers.dart';
 import 'front_end/Footer.dart';
 import 'front_end/LoginPanel.dart';
-import 'devices/Server.dart';
-import 'devices/UPS.dart';
-import 'devices/Device.dart';
-import 'dummy_devices.dart';
 import 'front_end/DeviceListing.dart';
 void main() {
   //Outputs content to the dart container.
