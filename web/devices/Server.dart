@@ -10,8 +10,8 @@ import 'WebPrintable.dart';
 class Server extends Device implements WebPrintable {
 
   ///Constructors
-  Server(String id, String name, String ip) : super(id,name,ip);
-  Server.withStatus(String id, String name, String ip, bool active) : super.withStatus(id,name,ip, active);
+  Server(String id,/* String name,*/ String ip) : super(id,/*name,*/ip);
+  Server.withStatus(String id, /*String name,*/String ip, bool active) : super.withStatus(id,/*name,*/ip, active);
   
   ///printToHTML()
   ///Returns a DOM Element of the device's information.
@@ -22,7 +22,7 @@ class Server extends Device implements WebPrintable {
     Element cardHeader = Element.div()..classes.addAll(['card-header','text-right']);
     Element img = Element.img()..attributes.addAll({'src':'./server.png'});
     img.classes.add('server-icon');
-    cardHeader.innerHtml += deviceName;
+    //cardHeader.innerHtml += deviceName;
     cardHeader.children.add(img);
     //Card Body
     Element cardBody = Element.div()..classes.add('card-body');

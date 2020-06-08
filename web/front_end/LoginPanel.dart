@@ -36,7 +36,7 @@ class LoginPanel {
     Element pswLabel = Element.tag('label')..classes.add('m-2')..innerText = 'Senha de acesso';
     passwordInput = Element.tag('input')..classes.add('m-2')..attributes.addAll({'type':'password'});
     passwordInput.id = 'psw_input';
-    submitButton = Element.tag('input')..classes.addAll(['m-2','btn','btn-dark'])..attributes.addAll({'type':'submit'});
+    submitButton = Element.tag('input')..classes.addAll(['m-2','btn','btn-dark'])..attributes.addAll({'type':'submit','value':'Entrar'});
     form.children.addAll([unameLabel,usernameInput,Element.br(),pswLabel,passwordInput,Element.br(),submitButton]);
     return form;
   }

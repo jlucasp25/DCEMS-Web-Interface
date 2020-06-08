@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'dart:core';
 import 'Server.dart';
 import 'UPS.dart';
 
@@ -10,38 +10,38 @@ class Device {
 
   ///Properties
   String deviceId;
-  String deviceName;
+  //String deviceName;
   String ipAddress;
+  var lastChecked;
   bool active = false;
 
   ///Construtors
-  Device(String id, String name, String ip) {
+  Device(String id, /*String name,*/ String ip) {
     deviceId = id;
-    deviceName = name;
+    //deviceName = name;
     ipAddress = ip;
   }
 
-  Device.withStatus(String id, String name, String ip, bool active) {
+  Device.withStatus(String id, /*String name,*/ String ip, bool active) {
     deviceId = id;
-    deviceName = name;
+    //deviceName = name;
     ipAddress = ip;
     active = active;
   }
 
   ///fromJSON()
   ///Factory constructor that parses a JSON to build a Device instance.
-  factory Device.fromJSON(Map<String,dynamic> jsonObject) {
-    Map<String,dynamic> jsonContents = jsonObject;
+  factory Device.fromJSON(Map<String,dynamic> jsonContents) {
     
-    if (!jsonContents.containsKey('device_type') || !jsonContents.containsKey('device_id') || !jsonContents.containsKey('device_name') || !jsonContents.containsKey('device_ip') || !jsonContents.containsKey('device_status') ) {
+    if (!jsonContents.containsKey('device_type') || !jsonContents.containsKey('device_id') ||/* !jsonContents.containsKey('device_name') ||*/ !jsonContents.containsKey('device_ip') || !jsonContents.containsKey('device_status') ) {
       throw Exception('JSON received doesnt contain all required keys!');
     }
 
     if (jsonContents['device_type'] == 'server') {
       return Server.withStatus(
         jsonContents['device_id'],
-        jsonContents['device_name'],
-        jsonContents['device_ip'],
+        //jsonContents['device_name'],
+        jsonContents['ip'],
         jsonContents['device_status']);
     }
     else if (jsonContents['device_type'] == 'ups') {
@@ -50,8 +50,8 @@ class Device {
       }
       return UPS.withStatus(
         jsonContents['device_id'],
-        jsonContents['device_name'],
-        jsonContents['device_ip'],
+       // jsonContents['device_name'],
+        jsonContents['ip'],
         jsonContents['device_charge'],
         jsonContents['device_status']);
     }
@@ -62,6 +62,11 @@ class Device {
 
   ///Methods
   
+  void updateDevice(var lastChecked,) {
+    
+  }
+
+
   ///stateAsText()
   ///Returns state value as a text for display.
   String stateAsText() {

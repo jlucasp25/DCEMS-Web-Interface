@@ -1,0 +1,98 @@
+version: '3.8'
+services:
+
+  rabbitmq:
+    image: rabbitmq:3
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - 4369:4369
+      - 5672:5672
+    volumes:
+      - RabbitMQLib:/var/lib/rabbitmq/
+
+#  firebird:
+#    image: jacobalberty/firebird:3.0
+#    container_name: firebird
+#    restart: always
+#    ports:
+#      - 3050:3050
+#    volumes:
+#      - FirebirdDB:/firebird/
+#    environment:
+#      - TZ=Europe/Lisbon
+#      - ISC_PASSWORD=guest
+#      - FIREBIRD_DATABASE=ups.db
+#      - FIREBIRD_USER=dccSysadmin
+#      - FIREBIRD_PASSWORD=BUaTZ3PF5UQpyven
+
+  mongo:
+    image: mongo:4.2
+    container_name: mongodb
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - HEMSMongoDBDatabase:/data/db
+    environment:
+      - MONGODB_PORT=27017
+#      - MONGO_INITDB_ROOT_USERNAME=dccsysadmin
+#      - MONGO_INITDB_ROOT_PASSWORD=BUaTZ3PF5UQpyven
+
+#  web-server:
+#    image: app-server/test:latest
+#    container_name: web-server
+#    restart: always
+#    ports:
+#      - 8500:8500
+#      - 8080:8080
+
+#  web-app:
+#    image: app-web/test:latest
+#    container_name: web-app
+#    restart: always
+#    ports:
+#      - 8080:8080
+
+  pmi-simulator1:
+    image: vaporio/ipmi-simulator
+    container_name: ipmi-simulator1
+    restart: always
+    ports:
+      - 623:623/udp
+    volumes:
+      - "/usr/local/etc/lan1.conf:/tmp/ipmisim/lan.conf"
+
+  pmi-simulator2:
+    image: vaporio/ipmi-simulator
+    container_name: ipmi-simulator2
+    restart: always
+    ports:
+      - 624:624/udp
+    volumes:
+      - "/usr/local/etc/lan2.conf:/tmp/ipmisim/lan.conf"
+
+
+  snmp-emulator1:
+    image: vaporio/snmp-emulator
+    container_name: snmp-emulator1
+    restart: always
+    ports:
+      - 1024:1024/udp
+    command: --data-dir=mibs/ups --agent-udpv4-endpoint=0.0.0.0:1024 --v3-user=simulator --v3-auth-key=auctoritas --v3-auth-proto=SHA --v3-priv-key=privatus --v3-priv-proto=AES
+
+  snmp-emulator2:
+    image: vaporio/snmp-emulator
+    container_name: snmp-emulator2
+    restart: always
+    ports:
+      - 1025:1025/udp
+    command: --data-dir=mibs/ups --agent-udpv4-endpoint=0.0.0.0:1025 --v3-user=simulator --v3-auth-key=auctoritas --v3-auth-proto=SHA --v3-priv-key=privatus --v3-priv-proto=AES
+
+
+
+volumes:
+  RabbitMQLib:
+    name: RabbitMQLib
+  HEMSMongoDBDatabase:
+    name: HEMSMongoDBDatabase

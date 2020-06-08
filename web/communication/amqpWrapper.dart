@@ -7,10 +7,10 @@ class AMQPWrapper {
 
   AMQPWrapper(String host, int port, String user, String password) {
 
-    _settings = new ConnectionSettings(
+    _settings = ConnectionSettings(
       host: host,
       port: port,
-      authProvider: new PlainAuthenticator(user, password)
+     // authProvider: new PlainAuthenticator(user, password)
     );
 
     _client = new Client(settings: _settings);
@@ -18,7 +18,7 @@ class AMQPWrapper {
 
   void connectAndListen() {
     _client.channel()
-    .then( (Channel channel) => channel.queue(""))
+    .then( (Channel channel) => channel.queue(''))
     .then( (Queue queue) => queue.consume())
     .then( (Consumer consumer) => consumer.listen(
       (AmqpMessage message) {
@@ -27,4 +27,8 @@ class AMQPWrapper {
     ));
   }
 
+}
+
+void main() {
+  AMQPWrapper w = AMQPWrapper('localhost',0000, user, password);
 }
